@@ -115,7 +115,11 @@
 				about that. It's our fault, not yours. We'll work hard to get this page
 				back online as soon as possible.
 			</p>
-
+			<?php if (isset($error)): ?>
+			<p>
+				The exact error was: <?php echo $error; ?>
+			</p>
+			<?php endif; ?>
 			<p>
 				Perhaps you would like to go to our <?php echo HTML::link('/', 'home page'); ?>?
 			</p>

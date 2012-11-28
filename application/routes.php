@@ -32,9 +32,23 @@
 |
 */
 
-Route::get('/', function()
+Route::get(array('/', '/(:all)/(:any?)'), function($path = 'index')
 {
-	return View::make('home.index');
+
+	try {
+		Bundle::start('sparkdown');
+
+		if (is_dir(path('app').'views/markdown/'.$path)){
+			$path = $path.'/index';
+		}
+
+		Section::inject('content', 
+			Sparkdown\View::make('markdown.'.str_replace('/', '.', $path)));
+		
+		return View::make('layouts.default');
+	} catch (\Exception $e) {
+		return Response::error('404', array('error' => $e->getMessage()));
+	}
 });
 
 /*
